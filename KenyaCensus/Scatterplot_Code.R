@@ -13,6 +13,7 @@ rm(list = ls())
 #load libraries 
 library(tidyverse)
 library(tigris)
+library(here)
 library(ggbump)
 library(rKenyaCensus)
 
@@ -67,12 +68,12 @@ scatter_plot <-
   labs(title = "Technology vs. Agriculture",
        subtitle = "Each bubble represents one county in Kenya, with the size being proportional to its population.",
        caption = "Data: Kenya Population & Housing Census 2019 
-                  Github: @Jenna-Gold | Twitter: @jennagoldberg5 | #TidyTuesday")
+                  Github: @Jenna-Gold | Twitter: @jennagoldd_ | #TidyTuesday")
 
 #view
 scatter_plot
 
 #export
 ggsave(scatter_plot, 
-       file = "Final_Plot.png",
+       file = here("KenyaCensus", "Final_Plot.png"),
        dpi = 1000)  
