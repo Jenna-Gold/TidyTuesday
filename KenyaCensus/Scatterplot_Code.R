@@ -1,11 +1,9 @@
 ############
 # Primary Author:Jenna Goldberg
 # Last Editor: 
-# Creation date: 
+# Creation date: Jan 19, 2021
 # Last Modified: 
 
-# Depends on:
-#     
 
 # Change Log:
 
@@ -18,6 +16,7 @@ library(tigris)
 library(ggbump)
 library(rKenyaCensus)
 
+#load data 
 internet_usage <- 
   V4_T2.33 %>% 
   filter(AdminArea == 'County') %>% 
@@ -31,6 +30,7 @@ crops <- V4_T2.20 %>%
   select(County,
          Pct_Households_Farming)
 
+#combine data 
 full_data <- 
   internet_usage %>% 
   left_join(crops) %>% 
@@ -38,7 +38,7 @@ full_data <-
            ifelse(County == "NAIROBI CITY", '1', '0'))
   
 
-
+#make plot! 
 scatter_plot <- 
   full_data %>% 
   ggplot() +
@@ -69,7 +69,10 @@ scatter_plot <-
        caption = "Data: Kenya Population & Housing Census 2019 
                   Github: @Jenna-Gold | Twitter: @jennagoldberg5 | #TidyTuesday")
 
+#view
 scatter_plot
+
+#export
 ggsave(scatter_plot, 
        file = "Final_Plot.png",
        dpi = 1000)  
