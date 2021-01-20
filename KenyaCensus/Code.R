@@ -1,11 +1,9 @@
 ############
 # Primary Author:Jenna Goldberg
 # Last Editor: 
-# Creation date: 
+# Creation date: Jan 19, 2021
 # Last Modified: 
 
-# Depends on:
-#     
 
 # Change Log:
 
@@ -15,9 +13,12 @@ rm(list = ls())
 #load libraries 
 library(tidyverse)
 library(tigris)
-library(ggbump)
+library(here)
+library(sf)
+library(ggpubr)
 library(rKenyaCensus)
 
+#load data 
 internet_usage <- 
   V4_T2.33 %>% 
   filter(AdminArea == 'County') %>% 
@@ -31,6 +32,7 @@ crops <- V4_T2.20 %>%
   select(County,
          Pct_Households_Farming)
 
+#combine data 
 full_data <- 
   internet_usage %>% 
   left_join(crops) %>% 
@@ -38,7 +40,7 @@ full_data <-
            ifelse(County == "NAIROBI CITY", '1', '0'))
   
 
-
+#make plot! 
 scatter_plot <- 
   full_data %>% 
   ggplot() +
@@ -67,9 +69,46 @@ scatter_plot <-
   labs(title = "Technology vs. Agriculture",
        subtitle = "Each bubble represents one county in Kenya, with the size being proportional to its population.",
        caption = "Data: Kenya Population & Housing Census 2019 
-                  Github: @Jenna-Gold | Twitter: @jennagoldberg5 | #TidyTuesday")
+                  Github: @Jenna-Gold | Twitter: @jennagoldd_ | #TidyTuesday")
 
+#view
 scatter_plot
+
+#export
 ggsave(scatter_plot, 
-       file = "Final_Plot.png",
+       file = here("KenyaCensus", "Final_Plot.png"),
        dpi = 1000)  
+
+#get shapefile 
+counties <- 
+  KenyaCounties_SHP %>% 
+  st_as_sf() %>% 
+  inner_join(full_data)
+
+map <- 
+  counties %>% 
+  ggplot() + 
+  geom_sf(
+    aes(fill = UoI_Total_Perc),
+    color = "#0d335d"
+  ) + 
+  scale_fill_gradient(low = "#fff3e6", high = "#1a508b") + 
+  theme_void() + 
+  theme(legend.title = element_text(color = "#fff3e6"),
+        legend.text = element_text(color = "#fff3e6"),
+        legend.position = "bottom",
+        panel.background = element_rect(fill =  "#0d335d", 
+                                        color = "#0d335d"),
+        plot.background = element_rect(fill =  "#0d335d",
+                                       color = "#0d335d"),
+        plot.title = element_text(color = "#fff3e6"),
+        plot.caption = element_text(color = "#fff3e6")) + 
+  labs(title = " Internet Usage Across Kenya",
+       caption = "Data: Kenya Population & Housing Census 2019 
+                  Github: @Jenna-Gold | Twitter: @jennagoldd_ | #TidyTuesday",
+       fill = "Percentage of Population")
+
+ggsave(map, 
+       file = here("KenyaCensus", "Map.png"),
+       dpi = 1000)  
+
