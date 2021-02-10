@@ -1,9 +1,10 @@
 ############
 # Primary Author:Jenna Goldberg
-# Creation date: Jan 26, 2021
-# Last Modified: 
+# Creation date: Feb 2, 2021
+# Last Modified: Feb 9 2021
 
 # Change Log:
+# 02/09 - Changed all labels to white for legibility 
 
 #clear environment 
 rm(list = ls())
@@ -66,7 +67,8 @@ plot <-
                       filter(Year == 2016)),
             aes(x = Year + 1, 
                 label = paste0(Race, " : ", Percentage, "%")), 
-            size = 3, hjust = 0, fontface = "bold") +
+            size = 3, hjust = 0, fontface = "bold",
+            color = "white") +
   scale_y_reverse() +
   cowplot::theme_minimal_vgrid() + 
   theme(
