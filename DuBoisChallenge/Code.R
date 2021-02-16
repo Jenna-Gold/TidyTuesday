@@ -42,16 +42,6 @@ grid.col <-
       "Black"
     )
 
-sector_labels <-
-  c(
-    "",
-    "",
-    "",
-    "",
-    "",
-    "WHITE.",
-    "BLACK."
-  )
 circos.clear()
 circos.par(start.degree = 90)
 chordDiagram(occupations,
