@@ -79,8 +79,8 @@ facet_plot <-
              y = pct,
              group = 1)) +
   geom_polygon(
-    color = "#8E0A18",
-    fill = "#8E0A18",
+    color = "#0059B0",
+    fill = "#0059B0",
     alpha = 0.75,
     lwd = 1.5) +
   facet_wrap(~year, nrow = 3) + 
@@ -118,8 +118,8 @@ average_plot <-
              y = pct,
              group = 1)) +
   geom_polygon(
-    color = "#8E0A18",
-    fill = "#8E0A18",
+    color = "#0059B0",
+    fill = "#0059B0",
     alpha = 0.75,
     lwd = 1.5) +
   coord_radar() + 
